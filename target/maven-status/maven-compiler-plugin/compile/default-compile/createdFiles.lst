@@ -1,5 +1,6 @@
 com\fisheatfish\fisheatfish\SystemInfo.class
 com\fisheatfish\fisheatfish\LoginPage.class
 module-info.class
+com\fisheatfish\fisheatfish\Authentication\LoginPage.class
 com\fisheatfish\fisheatfish\App.class
-com\fisheatfish\fisheatfish\RegisterPage.class
+com\fisheatfish\fisheatfish\Authentication\RegisterPage.class
