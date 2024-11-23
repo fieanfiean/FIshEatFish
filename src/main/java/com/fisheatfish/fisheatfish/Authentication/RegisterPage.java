@@ -4,8 +4,12 @@
  */
 package com.fisheatfish.fisheatfish.Authentication;
 
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
+import com.fisheatfish.fisheatfish.Database.MongoDBConnection;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -57,9 +61,58 @@ public class RegisterPage {
             stage.setScene(loginScene);
         });
         
+        registerButton.setOnAction(e ->{
+            String username = usernameField.getText();
+            String name = nameField.getText();
+            String password = passwordField.getText();
+            String confirmPassword = passwordComfirmField.getText();
+            
+            if (username.isEmpty() || name.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                showAlert("All fields must be filled!");
+                return;
+            }
+            
+            if(!password.equals(confirmPassword)){
+                showAlert("Psswords do not match");
+            }
+            
+            try{
+                MongoDatabase database = MongoDBConnection.connectToDatabase();
+                MongoCollection<Document>  userCollection = database.getCollection("Users");
+
+                Document userDocument = new Document("username",username)
+                        .append("name",name)
+                        .append("password",password);
+                userCollection.insertOne(userDocument);
+                showAlert("Registration successful");
+                
+                LoginPage loginPage = new LoginPage();
+                Scene loginScene = loginPage.createLoginScene(stage);
+                stage.setTitle("Login Page");
+                stage.setScene(loginScene);
+                
+                FindIterable<Document> users = userCollection.find();
+        
+                // Iterate through the result set and print each document
+                for (Document user : users) {
+                    System.out.println(user.toJson());
+                }
+                
+            }catch(Exception ex){
+                showAlert("Error When Register User: " + ex.getMessage());
+            }
+       });
     
         
         return new Scene(grid, 640, 480);
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Registrtion");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
     
 }
