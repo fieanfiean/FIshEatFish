@@ -1,4 +1,5 @@
 com\fisheatfish\fisheatfish\SystemInfo.class
+com\fisheatfish\fisheatfish\GameLobby\LobbyMainPage.class
 com\fisheatfish\fisheatfish\Authentication\LoginPage.class
 com\fisheatfish\fisheatfish\Database\MongoDBConnection.class
 com\fisheatfish\fisheatfish\App.class

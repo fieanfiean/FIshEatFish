@@ -3,13 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.fisheatfish.fisheatfish.Authentication;
+import com.fisheatfish.fisheatfish.GameLobby.LobbyMainPage;
 
-
+import com.fisheatfish.fisheatfish.Database.MongoDBConnection;
+import com.mongodb.client.*;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.bson.Document;
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  *
  * @author A S U S
@@ -55,17 +60,50 @@ public class LoginPage {
 
         // Handle login button click
         loginButton.setOnAction(e -> {
-            String username = usernameField.getText();
-            String password = passwordField.getText();
+            String username = usernameField.getText().trim();
+            String password = passwordField.getText().trim();
             
-            if (username.equals("admin") && password.equals("password")) {
-                statusLabel.setText("Login Successful!");
-            } else {
-                statusLabel.setText("Invalid Credentials. Try again.");
+            if (username.isEmpty() || password.isEmpty()) {
+            showAlert("Username and password must not be blank!");
+            return;
+    }
+            
+            try{
+                MongoDatabase database = MongoDBConnection.connectToDatabase();
+                MongoCollection<Document>  userCollection = database.getCollection("Users");
+                
+                Document user = userCollection.find(new Document("username", username)).first();
+                
+                if(user == null){
+                    showAlert("User nor found");
+                }
+                else{
+                    String storedPassword = user.getString("password");
+                    if(BCrypt.checkpw(password, storedPassword)){
+                        showAlert("Login successful!");
+                        LobbyMainPage lobbyPage = new LobbyMainPage();
+                        Scene lobbyScene = lobbyPage.createLobbyScene(stage);
+                        stage.setTitle("LobbyMainPage");
+                        stage.setScene(lobbyScene);
+                    } else {
+                        showAlert("Incorrect password!");
+                    }
+                }
+                
+            }catch(Exception ex){
+                showAlert("An error occurred: " + ex.getMessage());
             }
         });
 
         // Return the Scene
         return new Scene(grid, 640, 480);
+    }
+
+    private void showAlert(String message) {
+         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Login");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

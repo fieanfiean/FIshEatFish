@@ -14,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
+
 
 /**
  *
@@ -62,10 +64,10 @@ public class RegisterPage {
         });
         
         registerButton.setOnAction(e ->{
-            String username = usernameField.getText();
-            String name = nameField.getText();
-            String password = passwordField.getText();
-            String confirmPassword = passwordComfirmField.getText();
+            String username = usernameField.getText().trim();
+            String name = nameField.getText().trim();
+            String password = passwordField.getText().trim();
+            String confirmPassword = passwordComfirmField.getText().trim();
             
             if (username.isEmpty() || name.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 showAlert("All fields must be filled!");
@@ -77,12 +79,13 @@ public class RegisterPage {
             }
             
             try{
+                String hashedPassword = hashPassword(password);
                 MongoDatabase database = MongoDBConnection.connectToDatabase();
                 MongoCollection<Document>  userCollection = database.getCollection("Users");
 
                 Document userDocument = new Document("username",username)
                         .append("name",name)
-                        .append("password",password);
+                        .append("password",hashedPassword);
                 userCollection.insertOne(userDocument);
                 showAlert("Registration successful");
                 
@@ -113,6 +116,15 @@ public class RegisterPage {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    
+    public static String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    // Verify the entered password against the stored hashed password
+    public static boolean checkPassword(String password, String hashedPassword) {
+        return BCrypt.checkpw(password, hashedPassword);
     }
     
 }
