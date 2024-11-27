@@ -81,7 +81,7 @@ public class LoginPage {
                     String storedPassword = user.getString("password");
                     if(BCrypt.checkpw(password, storedPassword)){
                         showAlert("Login successful!");
-                        LobbyMainPage lobbyPage = new LobbyMainPage();
+                        LobbyMainPage lobbyPage = new LobbyMainPage(username);
                         Scene lobbyScene = lobbyPage.createLobbyScene(stage);
                         stage.setTitle("LobbyMainPage");
                         stage.setScene(lobbyScene);
@@ -100,7 +100,7 @@ public class LoginPage {
     }
 
     private void showAlert(String message) {
-         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Login");
         alert.setHeaderText(null);
         alert.setContentText(message);

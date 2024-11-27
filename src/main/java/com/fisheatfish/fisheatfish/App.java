@@ -15,15 +15,15 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-//        LoginPage loginPage = new LoginPage();
-//        Scene loginScene = loginPage.createLoginScene(stage);
-//        stage.setTitle("Login Page");
-//        stage.setScene(loginScene);
+        LoginPage loginPage = new LoginPage();
+        Scene loginScene = loginPage.createLoginScene(stage);
+        stage.setTitle("Login Page");
+        stage.setScene(loginScene);
 
-        LobbyMainPage lobbyPage = new LobbyMainPage();
-        Scene lobbyScene = lobbyPage.createLobbyScene(stage);
-        stage.setTitle("LobbyMainPage");
-        stage.setScene(lobbyScene);
+//        LobbyMainPage lobbyPage = new LobbyMainPage();
+//        Scene lobbyScene = lobbyPage.createLobbyScene(stage);
+//        stage.setTitle("LobbyMainPage");
+//        stage.setScene(lobbyScene);
         stage.show();
     }
 

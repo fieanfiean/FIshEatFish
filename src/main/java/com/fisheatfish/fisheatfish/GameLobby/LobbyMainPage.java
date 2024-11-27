@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.fisheatfish.fisheatfish.GameLobby;
+import com.fisheatfish.fisheatfish.GameLobby.GamePage;
 
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
@@ -20,6 +21,13 @@ import javafx.util.Duration;
  * @author A S U S
  */
 public class LobbyMainPage {
+    
+    private String username;
+    
+    public LobbyMainPage(String username) {
+        this.username = username;
+    }
+    
     public Scene createLobbyScene(Stage stage){
         Image playButton = new Image("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/playButton.png");
         
@@ -41,6 +49,10 @@ public class LobbyMainPage {
             scale.setCycleCount(2); // Shrink back after enlarging
             scale.play();
             // Add your logic here, e.g., navigating to another scene
+            GamePage gamePage = new GamePage(username);
+            Scene gameScene = gamePage.createGameScene(stage);
+            stage.setScene(gameScene);
+            System.out.print("Button Pressed");
         });
         
 
@@ -52,8 +64,10 @@ public class LobbyMainPage {
         grid.add(playImageButton, 0, 0);
         
         
-        
-        
         return new Scene(grid, 640, 480);
+    }
+    
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
