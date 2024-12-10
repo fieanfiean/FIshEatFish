@@ -1,9 +1,15 @@
 com\fisheatfish\fisheatfish\SystemInfo.class
 com\fisheatfish\fisheatfish\GameLobby\GamePage.class
+com\fisheatfish\fisheatfish\GameLobby\GamePauseAndRestartPage.class
 com\fisheatfish\fisheatfish\App.class
 com\fisheatfish\fisheatfish\GameLobby\Enemy.class
-com\fisheatfish\fisheatfish\GameLobby\Player.class
+com\fisheatfish\fisheatfish\GameLobby\LeaderboardPage$PlayerRecord.class
 com\fisheatfish\fisheatfish\GameLobby\LobbyMainPage.class
+com\fisheatfish\fisheatfish\GameLobby\SaveCsvPage.class
+com\fisheatfish\fisheatfish\GameLobby\LeaderboardPage.class
+com\fisheatfish\fisheatfish\GameLobby\GameHistoryPage.class
+com\fisheatfish\fisheatfish\GameLobby\Player.class
+com\fisheatfish\fisheatfish\GameLobby\GameOverPage.class
 com\fisheatfish\fisheatfish\Authentication\LoginPage.class
 com\fisheatfish\fisheatfish\Database\MongoDBConnection.class
 com\fisheatfish\fisheatfish\Authentication\RegisterPage.class

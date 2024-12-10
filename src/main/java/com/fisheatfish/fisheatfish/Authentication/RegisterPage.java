@@ -82,6 +82,13 @@ public class RegisterPage {
                 String hashedPassword = hashPassword(password);
                 MongoDatabase database = MongoDBConnection.connectToDatabase();
                 MongoCollection<Document>  userCollection = database.getCollection("Users");
+                
+                Document existingUser = userCollection.find(new Document("username", username)).first();
+
+                if (existingUser != null) {
+                    showAlert("Username is already taken. Please choose another one.");
+                    return;
+                }
 
                 Document userDocument = new Document("username",username)
                         .append("name",name)

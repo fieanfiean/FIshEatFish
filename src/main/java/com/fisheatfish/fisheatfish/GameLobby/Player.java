@@ -18,6 +18,10 @@ public class Player {
     private int size;
     private int speed;
     private int score;
+    private int fishEatenLevel_1;
+    private int fishEatenLevel_2;
+    private int fishEatenLevel_3;
+    private int fishEatenLevel_4;
     private ImageView imageView;
     private String currentDirection;
     
@@ -96,6 +100,8 @@ public class Player {
         return imageView;
     }
     
+   
+    
     public void grow(int growthFactor) {
         this.size += growthFactor; // Increase size
         this.imageView.setFitWidth(size * 10); // Adjust image size
@@ -103,8 +109,8 @@ public class Player {
     }   
     
     public void move(double deltaX, double deltaY, double paneWidth, double paneHeight) {
-        double newX = imageView.getX() + deltaX * speed;
-        double newY = imageView.getY() + deltaY * speed;
+        double newX = imageView.getX() + deltaX;
+        double newY = imageView.getY() + deltaY;
 
         // Ensure the fish stays within the pane's bounds
         if (newX >= 0 && newX + imageView.getFitWidth() <= paneWidth) {
@@ -146,6 +152,31 @@ public class Player {
     public void addScore(int points) {
         this.score += points;
         checkLevelUp(level);
+    }
+    
+    public void countFishEaten(int level){
+        switch(level){
+            case 1: this.fishEatenLevel_1 += 1; break;
+            case 2: this.fishEatenLevel_2 += 1; break;
+            case 3: this.fishEatenLevel_3 += 1; break;
+            case 4: this.fishEatenLevel_4 += 1; break;
+        }
+    }
+    
+    public int getFishEatenLevel_1(){
+        return fishEatenLevel_1;
+    }
+    
+    public int getFishEatenLevel_2(){
+        return fishEatenLevel_2;
+    }
+    
+    public int getFishEatenLevel_3(){
+        return fishEatenLevel_3;
+    }
+    
+    public int getFishEatenLevel_4(){
+        return fishEatenLevel_4;
     }
     
     private void checkLevelUp(int level) {

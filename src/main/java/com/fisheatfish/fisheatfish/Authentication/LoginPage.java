@@ -7,6 +7,7 @@ import com.fisheatfish.fisheatfish.GameLobby.LobbyMainPage;
 
 import com.fisheatfish.fisheatfish.Database.MongoDBConnection;
 import com.mongodb.client.*;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,18 +23,21 @@ import org.mindrot.jbcrypt.BCrypt;
 public class LoginPage {
     public Scene createLoginScene(Stage stage) {
         // Create labels and input fields
-        Label usernameLabel = new Label("Username:");
+        stage.setTitle("Login Page");
+
+        Label usernameLabel = new Label("Username:            ");
         TextField usernameField = new TextField();
         
-        Label passwordLabel = new Label("Password:");
+        Label passwordLabel = new Label("Password:            ");
         PasswordField passwordField = new PasswordField();
         
         Button loginButton = new Button("Login");
-        Label statusLabel = new Label();
+        
+        System.out.println("usernname is " + usernameField);
 
         // Create the Register hyperlink
-        Hyperlink registerLink = new Hyperlink("Register");
-        registerLink.setOnAction(e -> {
+        Button registerButton = new Button("Register");
+        registerButton.setOnAction(e -> {
             // Handle the registration action (open registration window or show registration form)
              RegisterPage registerPage = new RegisterPage();
              Scene registerScene = registerPage.createRegisterScene(stage);
@@ -54,9 +58,10 @@ public class LoginPage {
         grid.add(usernameField, 1, 0);
         grid.add(passwordLabel, 0, 1);
         grid.add(passwordField, 1, 1);
-        grid.add(loginButton, 1, 2);
-        grid.add(statusLabel, 1, 3);
-        grid.add(registerLink, 1, 4); // Add the Register hyperlink to the grid
+        grid.add(loginButton, 0, 2);
+        grid.add(registerButton, 1, 2); // Add the Register hyperlink to the grid
+        
+        GridPane.setHalignment(loginButton, HPos.RIGHT);
 
         // Handle login button click
         loginButton.setOnAction(e -> {
@@ -83,7 +88,6 @@ public class LoginPage {
                         showAlert("Login successful!");
                         LobbyMainPage lobbyPage = new LobbyMainPage(username);
                         Scene lobbyScene = lobbyPage.createLobbyScene(stage);
-                        stage.setTitle("LobbyMainPage");
                         stage.setScene(lobbyScene);
                     } else {
                         showAlert("Incorrect password!");
