@@ -22,6 +22,7 @@ import javafx.scene.effect.Glow;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.image.*;
+import javafx.scene.layout.*;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -40,28 +41,53 @@ public class LobbyMainPage {
     
     public Scene createLobbyScene(Stage stage){
         stage.setTitle("LobbyMainPage");
-        Image playButton = new Image("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/playButton.png");
+        GameMusic buttonEffect = new GameMusic();
+
+//        Image playButton = new Image("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/playButton.png");
         
-        ImageView imageView = new ImageView(playButton);
-        imageView.setFitWidth(200); 
-        imageView.setFitHeight(100);
+//        ImageView imageView = new ImageView(playButton);
+//        imageView.setFitWidth(200); 
+//        imageView.setFitHeight(100);
         
-        Button playImageButton = new Button();
+        Button playButton = new Button("Play");
         Button gameHistoryButton = new Button("History");
         Button leaderboardButton = new Button("Leaderboard");
         Button logoutButton = new Button("Logout");
-        playImageButton.setGraphic(imageView);
-        playImageButton.setStyle("-fx-background-color: white;");
+//        playImageButton.setGraphic(imageView);
+//        playImageButton.setStyle("-fx-background-color: white;");
+
+        // Set background and text color using inline style
+        playButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;"); // Green background, white text
+        gameHistoryButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white;"); // Blue background, white text
+        leaderboardButton.setStyle("-fx-background-color: #FF9800; -fx-text-fill: white;"); // Orange background, white text
+        logoutButton.setStyle("-fx-background-color: #F44336; -fx-text-fill: white;"); // Red background, white text
+
         
-        playImageButton.setOnAction(e -> {
-            ScaleTransition scale = new ScaleTransition(Duration.millis(200), playImageButton);
-            scale.setFromX(1.0);
-            scale.setFromY(1.0);
-            scale.setToX(1.2); // Slightly enlarge the button
-            scale.setToY(1.2);
-            scale.setAutoReverse(true);
-            scale.setCycleCount(2); // Shrink back after enlarging
-            scale.play();
+        double buttonWidth = 100; // Desired button width
+        double buttonHeight = 30; // Desired button height
+
+        playButton.setPrefWidth(buttonWidth);
+        playButton.setPrefHeight(buttonHeight);
+
+        gameHistoryButton.setPrefWidth(buttonWidth);
+        gameHistoryButton.setPrefHeight(buttonHeight);
+
+        leaderboardButton.setPrefWidth(buttonWidth);
+        leaderboardButton.setPrefHeight(buttonHeight);
+
+        logoutButton.setPrefWidth(buttonWidth);
+        logoutButton.setPrefHeight(buttonHeight);
+
+        playButton.setOnAction(e -> {
+        buttonEffect.playEffect("buttonEffect");
+//            ScaleTransition scale = new ScaleTransition(Duration.millis(200), playButton);
+//            scale.setFromX(1.0);
+//            scale.setFromY(1.0);
+//            scale.setToX(1.2); // Slightly enlarge the button
+//            scale.setToY(1.2);
+//            scale.setAutoReverse(true);
+//            scale.setCycleCount(2); // Shrink back after enlarging
+//            scale.play();
             // Add your logic here, e.g., navigating to another scene
             GamePage gamePage = new GamePage(username);
             Scene gameScene = gamePage.createGameScene(stage);
@@ -70,15 +96,18 @@ public class LobbyMainPage {
         });
         
         gameHistoryButton.setOnAction(event->{
+            buttonEffect.playEffect("buttonEffect");
             showGameHistoryPopup(username);
         });
         
         leaderboardButton.setOnAction(event ->{
+            buttonEffect.playEffect("buttonEffect");
             LeaderboardPage leaderboardPage = new LeaderboardPage();
             leaderboardPage.showLeaderboardPopup(stage);
         });
         
         logoutButton.setOnAction(event ->{
+            buttonEffect.playEffect("buttonEffect");
             LoginPage loginPage = new LoginPage();
             Scene loginScene = loginPage.createLoginScene(stage);
 //            stage.setTitle("Login Page");
@@ -86,14 +115,28 @@ public class LobbyMainPage {
         });
 
         GridPane grid = new GridPane();
+        
+        Image backgroundImage = new Image("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/LobbyBackground.jpg");
+
+        BackgroundImage bgImage = new BackgroundImage(
+            backgroundImage,
+            BackgroundRepeat.NO_REPEAT, // Repeat X
+            BackgroundRepeat.NO_REPEAT, // Repeat Y
+            BackgroundPosition.CENTER, // Position
+            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true) // Sizing
+        );
+
+        grid.setBackground(new Background(bgImage));
+        
         grid.setVgap(10);
         grid.setHgap(10);
         
         grid.setAlignment(Pos.CENTER);
-        grid.add(playImageButton, 0, 0);
+        grid.add(playButton, 0, 0);
         grid.add(gameHistoryButton, 0, 1);
         grid.add(leaderboardButton,0,2);
         grid.add(logoutButton,0,3);
+        
         
         
         return new Scene(grid, 640, 480);

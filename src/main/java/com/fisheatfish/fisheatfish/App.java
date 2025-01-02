@@ -1,5 +1,6 @@
 package com.fisheatfish.fisheatfish;
 
+import com.fisheatfish.fisheatfish.Authentication.FirstPage;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -14,15 +15,11 @@ import com.fisheatfish.fisheatfish.GameLobby.LobbyMainPage;
 public class App extends Application {
 
     @Override
-    public void start(Stage stage) {
-        LoginPage loginPage = new LoginPage();
-        Scene loginScene = loginPage.createLoginScene(stage);
-        stage.setScene(loginScene);
-
-//        LobbyMainPage lobbyPage = new LobbyMainPage();
-//        Scene lobbyScene = lobbyPage.createLobbyScene(stage);
-//        stage.setTitle("LobbyMainPage");
-//        stage.setScene(lobbyScene);
+    public void start(Stage stage) {        
+        FirstPage firstPage = new FirstPage();
+        Scene firstScene = firstPage.createFirstScene(stage);
+        stage.setScene(firstScene);
+        
         stage.show();
     }
 

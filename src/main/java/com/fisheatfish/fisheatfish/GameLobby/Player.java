@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
  */
 public class Player {
     private int level;
-    private int size;
+    private double size;
     private int speed;
     private int score;
     private int fishEatenLevel_1;
@@ -80,11 +80,11 @@ public class Player {
         this.level = level;
     }
     
-    public int getSize(){
+    public double getSize(){
         return size;
     }
     
-    public void setSize(int size){
+    public void setSize(double size){
         this.size = size;
     }
     
@@ -102,9 +102,9 @@ public class Player {
     
    
     
-    public void grow(int growthFactor) {
+    public void grow(double growthFactor) {
         this.size += growthFactor; // Increase size
-        this.imageView.setFitWidth(size * 10); // Adjust image size
+        this.imageView.setFitWidth(size *10); // Adjust image size
         this.imageView.setFitHeight(size * 5);
     }   
     
@@ -152,6 +152,7 @@ public class Player {
     public void addScore(int points) {
         this.score += points;
         checkLevelUp(level);
+        grow(0.05);
     }
     
     public void countFishEaten(int level){

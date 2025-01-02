@@ -26,6 +26,42 @@
             <version>0.4</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>24-ea+19</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>javazoom</groupId>
+            <artifactId>jlayer</artifactId>
+            <version>1.0.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx</artifactId>
+            <version>1.13.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.tianscar.javasound</groupId>
+            <artifactId>javasound-mp3</artifactId>
+            <version>1.9.8</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.github.klemek</groupId>
+            <artifactId>audio-analysis</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.soundlibs</groupId>
+            <artifactId>tritonus-share</artifactId>
+            <version>0.3.7.4</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -21,6 +21,10 @@ import java.util.Set;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+
 
 /**
  *
@@ -29,6 +33,7 @@ import javafx.scene.image.Image;
 public class GamePage {
     
     private String username;
+//    private GameMusic musicManager;
     private final Set<KeyCode> activeKeys = new HashSet();
     
     public GamePage(String username) {
@@ -41,6 +46,11 @@ public class GamePage {
         Scene scene = new Scene(pane, 640, 480);
         Label score = new Label("Score: 0");
         Label level = new Label("Level: 1");
+        
+        //background music
+        GameMusic musicManager = new GameMusic();
+        musicManager.playMusic("gamePlay");
+
     
         //background
         Image backgroundImage = new Image("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/gameBackground.jpg");
@@ -127,7 +137,7 @@ public class GamePage {
                         pane.getChildren().remove(enemy.getImageView());
                         enemies.remove(enemy);
                         
-                        int points = enemy.getLevel() * 2; // Example: Score = enemy level * 2
+                        int points = enemy.getLevel() * 10; // Example: Score = enemy level * 2
                         playerFish.addScore(points);
                         playerFish.countFishEaten(enemy.getLevel());
                         score.setText("Score: " + Integer.toString(playerFish.getScore()));
@@ -136,8 +146,8 @@ public class GamePage {
                     } else {
                         System.out.println("Game Over!");
 //                        stopGame(gameLoopWrapper[0], enemyMovement,spawnEnemiesTimeline, pane, stage); // Reference is now safe
-                        GameOverPage gameOverPage = new GameOverPage(username);
-                        gameOverPage.showGameOverPopup(gameLoopWrapper[0], enemyMovement, spawnEnemiesTimeline, pane, stage, playerFish);
+                        GameOverPage gameOverPage = new GameOverPage(username,musicManager);
+                        gameOverPage.showGameOverPopup(gameLoopWrapper[0], enemyMovement, spawnEnemiesTimeline, pane, stage, playerFish, musicManager);
                     }
                     break;
                 }
@@ -145,7 +155,7 @@ public class GamePage {
             
             if(activeKeys.contains(KeyCode.ESCAPE)){
                 System.out.print("Game Paused");
-                GamePauseAndRestartPage gamePauseAndRestartPage = new GamePauseAndRestartPage(username);
+                GamePauseAndRestartPage gamePauseAndRestartPage = new GamePauseAndRestartPage(username,musicManager);
                 gamePauseAndRestartPage.pauseGame(gameLoopWrapper[0], enemyMovement,spawnEnemiesTimeline,pane,stage,playerFish);
             }
             

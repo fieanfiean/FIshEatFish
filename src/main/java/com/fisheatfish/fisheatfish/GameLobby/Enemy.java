@@ -107,11 +107,18 @@ public class Enemy {
     // Create a new enemy with a random position and direction
     public static Enemy createNewEnemy(Scene scene, Pane pane, int playerLevel) {
         int enemyLevel = getEnemyLevel(playerLevel);
+        String leftImage = "";
+        String rightImage = "";
 
         // Image paths for left and right directions
-        String leftImage = String.format("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy%dLeft.png", enemyLevel);
-        String rightImage = String.format("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy%dRight.png", enemyLevel);
-
+        if(enemyLevel < 3){
+            leftImage = String.format("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy%dLeft.png", enemyLevel);
+            rightImage = String.format("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy%dRight.png", enemyLevel);
+        }
+        else{
+            leftImage = String.format("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy%dLeft.jpeg", enemyLevel);
+            rightImage = String.format("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy%dRight.jpeg", enemyLevel);
+        }
         // Create a new enemy with random position
         Enemy newEnemy = new Enemy(enemyLevel, leftImage, rightImage);
 

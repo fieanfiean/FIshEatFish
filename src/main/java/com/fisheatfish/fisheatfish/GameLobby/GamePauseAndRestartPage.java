@@ -19,9 +19,12 @@ import javafx.stage.Stage;
 
 public class GamePauseAndRestartPage {
     private final String username;
+    private GameMusic musicManager;
 
-    public GamePauseAndRestartPage(String username) {
+
+    public GamePauseAndRestartPage(String username, GameMusic musicManager) {
         this.username = username;
+        this.musicManager = musicManager;
     }
     
     public Scene restartGame(Stage stage) {
@@ -31,6 +34,7 @@ public class GamePauseAndRestartPage {
     }
 
     public void pauseGame(Timeline gameLoop, Timeline enemyMovement, Timeline spawnEnemiesTimeline, Pane pane, Stage stage, Player playerFish) {
+        GameMusic buttonEffect = new GameMusic();
         GridPane popupGrid = new GridPane();
         popupGrid.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
         Label gamePauseLabel = new Label("Game Paused");
@@ -46,6 +50,7 @@ public class GamePauseAndRestartPage {
 
         continueButton.setOnAction(event -> {
             // Resume game elements
+            buttonEffect.playEffect("buttonEffect");
             gameLoop.play();
             enemyMovement.play();
             spawnEnemiesTimeline.play();
@@ -54,10 +59,11 @@ public class GamePauseAndRestartPage {
 
         endGameButton.setOnAction(e -> {
             // Quit the game and return to the lobby
+            buttonEffect.playEffect("buttonEffect");
             saveGameDataToCSV(playerFish, username);
             pane.getChildren().remove(popupGrid);
-            GameOverPage gameOverPage = new GameOverPage(username);
-            gameOverPage.showGameOverPopup(gameLoop, enemyMovement, spawnEnemiesTimeline, pane, stage, playerFish);
+            GameOverPage gameOverPage = new GameOverPage(username,musicManager);
+            gameOverPage.showGameOverPopup(gameLoop, enemyMovement, spawnEnemiesTimeline, pane, stage, playerFish, musicManager);
         });
 
         // Set up the layout for the popup

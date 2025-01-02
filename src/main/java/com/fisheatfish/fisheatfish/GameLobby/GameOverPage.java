@@ -23,15 +23,19 @@ import javafx.stage.Stage;
 public class GameOverPage {
 
     private final String username;
+    private final GameMusic musicManager;
 
-    public GameOverPage(String username) {
+    public GameOverPage(String username, GameMusic musicManager) {
         this.username = username;
+        this.musicManager = musicManager;
     }
 
     private static final String FILE_PATH = "src/main/java/com/fisheatfish/fisheatfish/Database/game_data.csv";
 
-    public void showGameOverPopup(Timeline gameLoop, Timeline enemyMovement, Timeline spawnEnemiesTimeline, Pane pane, Stage stage, Player playerFish) {
+
+    public void showGameOverPopup(Timeline gameLoop, Timeline enemyMovement, Timeline spawnEnemiesTimeline, Pane pane, Stage stage, Player playerFish, GameMusic musicManager) {
         // Create a new GridPane for the pop-up
+        GameMusic buttonEffect = new GameMusic();
         GridPane popupGrid = new GridPane();
         popupGrid.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);"); // Semi-transparent background
 
@@ -40,6 +44,9 @@ public class GameOverPage {
         enemyMovement.stop();
         spawnEnemiesTimeline.stop();
         saveGameDataToCSV(playerFish, username);
+        
+        musicManager.pauseMusic("gamePlay");
+        musicManager.playEffect("gameOver");
 
 
         // Create a label for the "Game Over" message
@@ -92,6 +99,7 @@ public class GameOverPage {
         // Set up button actions
         restartButton.setOnAction(e -> {
             // Restart the game
+            buttonEffect.playEffect("buttonEffect");
             Scene newGameScene = restartGame(stage);  // Get the new game scene
             stage.setScene(newGameScene);  // Set the new scene on the stage
             pane.getChildren().remove(popupGrid); // Remove the popup
@@ -99,6 +107,7 @@ public class GameOverPage {
 
         quitButton.setOnAction(e -> {
             // Quit the game
+            buttonEffect.playEffect("buttonEffect");
             LobbyMainPage lobbyPage = new LobbyMainPage(username);
             Scene lobbyScene = lobbyPage.createLobbyScene(stage);
             stage.setScene(lobbyScene);

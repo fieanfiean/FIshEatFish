@@ -5,6 +5,7 @@
 package com.fisheatfish.fisheatfish.Authentication;
 
 import com.fisheatfish.fisheatfish.Database.MongoDBConnection;
+import com.fisheatfish.fisheatfish.GameLobby.GameMusic;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
@@ -12,6 +13,12 @@ import org.bson.Document;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
@@ -23,21 +30,30 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class RegisterPage {
     public Scene createRegisterScene(Stage stage) {
-        
+        GameMusic buttonEffect = new GameMusic();
+
         Label usernameLabel = new Label("Username: ");
+        usernameLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #FFFFFF;");
         TextField usernameField = new TextField();
 
         Label nameLabel = new Label("Name: ");
+        nameLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #FFFFFF;");
         TextField nameField = new TextField();
 
         Label passwordLabel = new Label("Password:");
+        passwordLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #FFFFFF;");
         PasswordField passwordField = new PasswordField();
 
         Label passwordComfirmLabel = new Label("Confirmation Password: ");
+        passwordComfirmLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #FFFFFF;");
         PasswordField passwordComfirmField = new PasswordField();
         
         Button registerButton = new Button("Register");
         Button cancelButton = new Button("Cancel");
+        
+        cancelButton.setStyle("-fx-background-color: #ADD8E6; -fx-text-fill: white;"); // Light blue background, white text
+        registerButton.setStyle("-fx-background-color: #ADD8E6; -fx-text-fill: white;"); // Light blue background, white text
+
 
         GridPane grid = new GridPane();
         grid.setVgap(10);
@@ -56,14 +72,27 @@ public class RegisterPage {
         GridPane.setHalignment(cancelButton, HPos.RIGHT);
         grid.add(registerButton, 1, 4);
         
+        Image backgroundImage = new Image("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/AuthenticationBackground.jpg");
+
+        BackgroundImage bgImage = new BackgroundImage(
+            backgroundImage,
+            BackgroundRepeat.NO_REPEAT, // Repeat X
+            BackgroundRepeat.NO_REPEAT, // Repeat Y
+            BackgroundPosition.CENTER, // Position
+            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true) // Sizing
+        );
+
+        grid.setBackground(new Background(bgImage));
+        
         cancelButton.setOnAction(e -> {
-            LoginPage loginPage = new LoginPage();
-            Scene loginScene = loginPage.createLoginScene(stage);
-            stage.setTitle("Login Page");
-            stage.setScene(loginScene);
+            buttonEffect.playEffect("buttonEffect");
+            FirstPage firstPage = new FirstPage();
+            Scene firstScene = firstPage.createFirstScene(stage);
+            stage.setScene(firstScene); 
         });
         
         registerButton.setOnAction(e ->{
+            buttonEffect.playEffect("buttonEffect");
             String username = usernameField.getText().trim();
             String name = nameField.getText().trim();
             String password = passwordField.getText().trim();
