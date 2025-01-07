@@ -34,19 +34,19 @@ public class Player {
         
         switch(level){
             case 1:
-                this.size = 8;  // Small
+                this.size = 10;  // Small
                 this.speed = 2; // Slow
                 break;
             case 2:
-                this.size = 11;  // Medium
+                this.size = 15;  // Medium
                 this.speed = 3; // Moderate
                 break;
             case 3:
-                this.size = 15; // Large
+                this.size = 20; // Large
                 this.speed = 4; // Fast
                 break;
             case 4:
-                this.size = 18; // Extra large
+                this.size = 25; // Extra large
                 this.speed = 5; // Very fast
                 break;
             default:
@@ -139,7 +139,7 @@ public class Player {
     
     public void changeDirection(String direction) {
         // Change the image based on the direction
-        String imagePath = "file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/player" + direction + ".jpeg";
+        String imagePath = "file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/player" + direction + ".png";
         Image newImage = new Image(imagePath);
         imageView.setImage(newImage);
         currentDirection = direction;

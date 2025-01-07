@@ -78,7 +78,7 @@ public class GamePage {
         Enemy level4Fish = new Enemy(4,"file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy4Left.jpeg","file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy4Right.jpeg");
         
         //Player
-        Player playerFish = new Player(1,"file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/playerRight.jpeg");
+        Player playerFish = new Player(1,"file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/playerRight.png");
         
         List<Enemy> enemies = new ArrayList<>();
         

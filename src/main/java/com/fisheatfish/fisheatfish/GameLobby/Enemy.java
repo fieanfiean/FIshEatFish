@@ -39,7 +39,7 @@ public class Enemy {
                 this.speed = 1; // Slow
                 break;
             case 2:
-                this.size = 8;  // Medium
+                this.size = 10;  // Medium
                 this.speed = 2; // Moderate
                 break;
             case 3:
@@ -47,7 +47,7 @@ public class Enemy {
                 this.speed = 3; // Fast
                 break;
             case 4:
-                this.size = 15; // Extra large
+                this.size = 20; // Extra large
                 this.speed = 4; // Very fast
                 break;
             default:
@@ -111,14 +111,8 @@ public class Enemy {
         String rightImage = "";
 
         // Image paths for left and right directions
-        if(enemyLevel < 3){
-            leftImage = String.format("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy%dLeft.png", enemyLevel);
-            rightImage = String.format("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy%dRight.png", enemyLevel);
-        }
-        else{
-            leftImage = String.format("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy%dLeft.jpeg", enemyLevel);
-            rightImage = String.format("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy%dRight.jpeg", enemyLevel);
-        }
+        leftImage = String.format("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy%dLeft.png", enemyLevel);
+        rightImage = String.format("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/enemy%dRight.png", enemyLevel);
         // Create a new enemy with random position
         Enemy newEnemy = new Enemy(enemyLevel, leftImage, rightImage);
 
