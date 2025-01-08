@@ -143,6 +143,7 @@ public class GamePage {
                         score.setText("Score: " + Integer.toString(playerFish.getScore()));
                         level.setText("Level: " + Integer.toString(playerFish.getLevel()));
                         System.out.println("Score: " + playerFish.getScore());
+                        playerFish.grow(0.5);
                     } else {
                         System.out.println("Game Over!");
 //                        stopGame(gameLoopWrapper[0], enemyMovement,spawnEnemiesTimeline, pane, stage); // Reference is now safe

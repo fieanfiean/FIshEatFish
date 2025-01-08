@@ -54,14 +54,14 @@ public class GameOverPage {
         gameOverLabel.setStyle("-fx-font-size: 30px; -fx-text-fill: white;");
         
         Label congratLabel = new Label("Congrat!!\nYou have achieve a new highest score");
-        gameOverLabel.setStyle("-fx-font-size: 30px; -fx-text-fill: black;");
+        gameOverLabel.setStyle("-fx-font-size: 30px; -fx-text-fill: white;");
         
         Label currentHighestScore = new Label("Highest Score: " + Integer.toString(getHighestScore()));
-        currentHighestScore.setStyle("-fx-font-size: 30px; -fx-text-fill: black;");
+        currentHighestScore.setStyle("-fx-font-size: 30px; -fx-text-fill: white;");
 
         Label currentScore = new Label();
         currentScore.setText("Current Score: " + Integer.toString(playerFish.getScore()));
-        currentScore.setStyle("-fx-font-size: 30px; -fx-text-fill: black;");
+        currentScore.setStyle("-fx-font-size: 30px; -fx-text-fill: white;");
 
         // Create the "Restart" and "Quit" buttons
         Button restartButton = new Button("Restart");

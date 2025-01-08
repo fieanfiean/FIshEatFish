@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.fisheatfish.fisheatfish.GameLobby;
+import com.fisheatfish.fisheatfish.Authentication.FirstPage;
 import com.fisheatfish.fisheatfish.Authentication.LoginPage;
 import com.fisheatfish.fisheatfish.GameLobby.GamePage;
 import java.io.BufferedReader;
@@ -108,10 +109,9 @@ public class LobbyMainPage {
         
         logoutButton.setOnAction(event ->{
             buttonEffect.playEffect("buttonEffect");
-            LoginPage loginPage = new LoginPage();
-            Scene loginScene = loginPage.createLoginScene(stage);
-//            stage.setTitle("Login Page");
-            stage.setScene(loginScene);
+            FirstPage firstPage = new FirstPage();
+            Scene firstScene = firstPage.createFirstScene(stage);
+            stage.setScene(firstScene);
         });
 
         GridPane grid = new GridPane();

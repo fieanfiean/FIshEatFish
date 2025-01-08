@@ -20,6 +20,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -51,38 +52,48 @@ public class RegisterPage {
         Button registerButton = new Button("Register");
         Button cancelButton = new Button("Cancel");
         
-        cancelButton.setStyle("-fx-background-color: #ADD8E6; -fx-text-fill: white;"); // Light blue background, white text
-        registerButton.setStyle("-fx-background-color: #ADD8E6; -fx-text-fill: white;"); // Light blue background, white text
+        cancelButton.setStyle("-fx-background-color: #ADD8E6; -fx-text-fill: black;"); // Light blue background, white text
+        registerButton.setStyle("-fx-background-color: #ADD8E6; -fx-text-fill: black;"); // Light blue background, white text
 
+        // Parent container to hold everything
+        StackPane root = new StackPane();
 
-        GridPane grid = new GridPane();
-        grid.setVgap(10);
-        grid.setHgap(10);
-        grid.setAlignment(Pos.CENTER);
-        
-        grid.add(usernameLabel, 0, 0);
-        grid.add(usernameField, 1, 0);
-        grid.add(nameLabel, 0, 1);
-        grid.add(nameField, 1, 1);
-        grid.add(passwordLabel, 0, 2);
-        grid.add(passwordField, 1, 2);
-        grid.add(passwordComfirmLabel, 0, 3);
-        grid.add(passwordComfirmField, 1, 3);
-        grid.add(cancelButton, 0, 4);
+        // Smaller grid for details
+        GridPane detailsGrid = new GridPane();
+        detailsGrid.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
+        detailsGrid.setPadding(new Insets(20)); // Add padding for spacing inside the smaller grid
+        detailsGrid.setVgap(10);
+        detailsGrid.setHgap(10);
+        detailsGrid.setMaxWidth(400); // Optional: Limit the width of the smaller grid
+        detailsGrid.setMaxHeight(200);
+        detailsGrid.setAlignment(Pos.CENTER);
+
+        // Add labels and fields to the smaller grid
+        detailsGrid.add(usernameLabel, 0, 0);
+        detailsGrid.add(usernameField, 1, 0);
+        detailsGrid.add(nameLabel, 0, 1);
+        detailsGrid.add(nameField, 1, 1);
+        detailsGrid.add(passwordLabel, 0, 2);
+        detailsGrid.add(passwordField, 1, 2);
+        detailsGrid.add(passwordComfirmLabel, 0, 3);
+        detailsGrid.add(passwordComfirmField, 1, 3);
+        detailsGrid.add(cancelButton, 0, 4);
         GridPane.setHalignment(cancelButton, HPos.RIGHT);
-        grid.add(registerButton, 1, 4);
-        
-        Image backgroundImage = new Image("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/AuthenticationBackground.jpg");
+        detailsGrid.add(registerButton, 1, 4);
 
+        // Set background image for the parent container
+        Image backgroundImage = new Image("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/AuthenticationBackground.jpg");
         BackgroundImage bgImage = new BackgroundImage(
             backgroundImage,
-            BackgroundRepeat.NO_REPEAT, // Repeat X
-            BackgroundRepeat.NO_REPEAT, // Repeat Y
-            BackgroundPosition.CENTER, // Position
-            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true) // Sizing
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundPosition.CENTER,
+            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true)
         );
+        root.setBackground(new Background(bgImage));
 
-        grid.setBackground(new Background(bgImage));
+        // Add the smaller grid to the parent container
+        root.getChildren().add(detailsGrid);
         
         cancelButton.setOnAction(e -> {
             buttonEffect.playEffect("buttonEffect");
@@ -143,7 +154,7 @@ public class RegisterPage {
        });
     
         
-        return new Scene(grid, 640, 480);
+        return new Scene(root, 640, 480);
     }
 
     private void showAlert(String message) {

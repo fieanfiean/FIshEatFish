@@ -26,6 +26,7 @@ public class Player {
     private String currentDirection;
     
     private final Map<Integer, Integer> levelUpThresholdMap = new HashMap<>();
+    private final Map<String, Image> cachedImages = new HashMap<>(); 
     
     public Player(int level,String imagePath){
         this.level = level;
@@ -34,23 +35,26 @@ public class Player {
         
         switch(level){
             case 1:
-                this.size = 10;  // Small
+                this.size = 3;  // Small
                 this.speed = 2; // Slow
                 break;
             case 2:
-                this.size = 15;  // Medium
+                this.size = 8;  // Medium
                 this.speed = 3; // Moderate
                 break;
             case 3:
-                this.size = 20; // Large
+                this.size = 13; // Large
                 this.speed = 4; // Fast
                 break;
             case 4:
-                this.size = 25; // Extra large
+                this.size = 18; // Extra large
                 this.speed = 5; // Very fast
                 break;
             default:
-                throw new IllegalArgumentException("Invalid level: " + level);
+                // Add additional levels if needed
+                this.size += 5;  // Increment size for levels beyond 4
+                this.speed += 1; // Increment speed for levels beyond 4
+                break;
         }
         
         levelUpThresholdMap.put(1, 50);
@@ -70,24 +74,29 @@ public class Player {
         this.imageView.setFitWidth(size * 10); // Adjust width based on size
         this.imageView.setFitHeight(size * 5);
         this.currentDirection = "Right";
+        
+        cachedImages.put("LEFT", new Image("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/playerLeft.png"));
+        cachedImages.put("RIGHT", new Image("file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/playerRight.png"));
     }
     
+ 
+   
     private void adjustAttributesForLevel(int newLevel) {
         switch (newLevel) {
             case 1:
-                this.size = 10;  // Small
+                this.size = 3;  // Small
                 this.speed = 2;  // Slow
                 break;
             case 2:
-                this.size = 15;  // Medium
+                this.size = 8;  // Medium
                 this.speed = 3;  // Moderate
                 break;
             case 3:
-                this.size = 20;  // Large
+                this.size = 13;  // Large
                 this.speed = 4;  // Fast
                 break;
             case 4:
-                this.size = 25;  // Extra large
+                this.size = 18;  // Extra large
                 this.speed = 5;  // Very fast
                 break;
             default:
@@ -139,17 +148,28 @@ public class Player {
     }   
     
     public void move(double deltaX, double deltaY, double paneWidth, double paneHeight) {
-        double newX = imageView.getX() + deltaX;
-        double newY = imageView.getY() + deltaY;
+    double newX = imageView.getX() + deltaX;
+    double newY = imageView.getY() + deltaY;
 
-        // Ensure the fish stays within the pane's bounds
-        if (newX >= 0 && newX + imageView.getFitWidth() <= paneWidth) {
-            imageView.setX(newX);
-        }
-        if (newY >= 0 && newY + imageView.getFitHeight() <= paneHeight) {
-            imageView.setY(newY);
-        }
-    }   
+    // Ensure the fish stays within the pane's bounds
+    if (newX < 0) {
+        newX = 0; // Prevent going out of the left boundary
+    } else if (newX + imageView.getFitWidth() > paneWidth) {
+        newX = paneWidth - imageView.getFitWidth(); // Prevent going out of the right boundary
+    }
+
+    if (newY < 0) {
+        newY = 0; // Prevent going out of the top boundary
+    } else if (newY + imageView.getFitHeight() > paneHeight) {
+        newY = paneHeight - imageView.getFitHeight(); // Prevent going out of the bottom boundary
+    }
+
+    imageView.setX(newX);
+    imageView.setY(newY);
+
+    System.out.println("Current position：X:" + newX + " Y: " + newY);
+}
+  
     
     public double getX() {
         return imageView.getX();
@@ -167,12 +187,33 @@ public class Player {
         imageView.setY(y);
     }
     
+//    public void changeDirection(String direction) {
+//        // Change the image based on the direction
+//        String imagePath = "file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/player" + direction + ".png";
+//        Image newImage = new Image(imagePath);
+//        imageView.setImage(newImage);
+//        currentDirection = direction;
+//        setCurrentDirection(direction);
+//    }
+    
     public void changeDirection(String direction) {
-        // Change the image based on the direction
-        String imagePath = "file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/player" + direction + ".png";
-        Image newImage = new Image(imagePath);
-        imageView.setImage(newImage);
-        currentDirection = direction;
+        Image newImage = cachedImages.get(direction);
+        System.out.println("Current file path: " + newImage);
+        if (newImage != null) {
+            imageView.setImage(newImage);
+            setCurrentDirection(direction);
+        } else {
+            System.err.println("Image for direction " + direction + " not found!");
+        }
+    }
+
+    
+    public void setCurrentDirection(String direction){
+        this.currentDirection = direction;
+    }
+    
+    public String getCurrentDirection(){
+        return this.currentDirection;
     }
     
     public int getScore() {
@@ -182,7 +223,6 @@ public class Player {
     public void addScore(int points) {
         this.score += points;
         checkLevelUp(level);
-        grow(0.05);
     }
     
     public void countFishEaten(int level){
@@ -218,9 +258,11 @@ public class Player {
     }
     
     private void levelUp() {
+        String imagePath = "file:src/main/java/com/fisheatfish/fisheatfish/Asset/Image/player" + getCurrentDirection() + ".png";
         this.setLevel(this.getLevel() + 1); // Increment player level
         adjustAttributesForLevel(this.getLevel());
         System.out.println("Level Up! New level: " + this.getLevel());
+        System.out.println("Current speed: " + this.getSpeed());
     }
 }
 
