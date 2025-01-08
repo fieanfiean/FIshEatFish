@@ -60,7 +60,7 @@ public class GamePauseAndRestartPage {
         endGameButton.setOnAction(e -> {
             // Quit the game and return to the lobby
             buttonEffect.playEffect("buttonEffect");
-            saveGameDataToCSV(playerFish, username);
+//            saveGameDataToCSV(playerFish, username);
             pane.getChildren().remove(popupGrid);
             GameOverPage gameOverPage = new GameOverPage(username,musicManager);
             gameOverPage.showGameOverPopup(gameLoop, enemyMovement, spawnEnemiesTimeline, pane, stage, playerFish, musicManager);

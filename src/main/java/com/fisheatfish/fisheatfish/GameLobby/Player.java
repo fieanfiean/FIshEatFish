@@ -72,6 +72,36 @@ public class Player {
         this.currentDirection = "Right";
     }
     
+    private void adjustAttributesForLevel(int newLevel) {
+        switch (newLevel) {
+            case 1:
+                this.size = 10;  // Small
+                this.speed = 2;  // Slow
+                break;
+            case 2:
+                this.size = 15;  // Medium
+                this.speed = 3;  // Moderate
+                break;
+            case 3:
+                this.size = 20;  // Large
+                this.speed = 4;  // Fast
+                break;
+            case 4:
+                this.size = 25;  // Extra large
+                this.speed = 5;  // Very fast
+                break;
+            default:
+                // Add additional levels if needed
+                this.size += 5;  // Increment size for levels beyond 4
+                this.speed += 1; // Increment speed for levels beyond 4
+                break;
+        }
+
+        // Update the image size to reflect the new size
+        this.imageView.setFitWidth(this.size * 10);
+        this.imageView.setFitHeight(this.size * 5);
+    }
+    
     public int getLevel(){
         return level;
     }
@@ -189,6 +219,7 @@ public class Player {
     
     private void levelUp() {
         this.setLevel(this.getLevel() + 1); // Increment player level
+        adjustAttributesForLevel(this.getLevel());
         System.out.println("Level Up! New level: " + this.getLevel());
     }
 }
